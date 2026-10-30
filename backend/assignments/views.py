@@ -129,6 +129,7 @@ def assignment_list_create(request):
             status=status.HTTP_400_BAD_REQUEST
         )
 
+
 @api_view(['GET', 'PUT', 'PATCH', 'DELETE'])
 @permission_classes([IsAuthenticated])
 def assignment_detail(request, pk):
@@ -144,10 +145,12 @@ def assignment_detail(request, pk):
             status=status.HTTP_404_NOT_FOUND
         )
 
+    # GET: Retrieve one assignment
     if request.method == 'GET':
         serializer = AssignmentSerializer(assignment)
         return Response(serializer.data)
 
+    # PUT/PATCH: Update an assignment
     elif request.method in ['PUT', 'PATCH']:
         serializer = AssignmentSerializer(
             assignment,
@@ -164,10 +167,10 @@ def assignment_detail(request, pk):
             status=status.HTTP_400_BAD_REQUEST
         )
 
+    # DELETE: Delete an assignment
     elif request.method == 'DELETE':
         assignment.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
-
 
 
 @api_view(['GET'])
